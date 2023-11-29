@@ -76,7 +76,7 @@ export const SuggestBox = () => {
       flip({ padding: 10 }),
       // Resize the popover to be fill the available height
       size({
-        apply({ rects, availableHeight, elements }) {
+        apply({ availableHeight, elements }) {
           Object.assign(elements.floating.style, {
             maxHeight: `${availableHeight}px`,
           });
