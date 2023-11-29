@@ -1,10 +1,10 @@
 import * as sarif from "sarif";
 import {
+  Column,
   RawResultSet,
+  ResolvableLocationValue,
   ResultRow,
   ResultSetSchema,
-  Column,
-  ResolvableLocationValue,
 } from "../common/bqrs-cli-types";
 import {
   VariantAnalysis,
@@ -25,6 +25,7 @@ import {
 } from "../model-editor/shared/view-state";
 import { Mode } from "../model-editor/shared/mode";
 import { QueryLanguage } from "./query-language";
+import { AccessPathSuggestionOptions } from "../model-editor/suggestions";
 
 /**
  * This module contains types and code that are shared between
@@ -592,13 +593,19 @@ interface RevealMethodMessage {
   methodSignature: string;
 }
 
+interface SetAccessPathSuggestionsMessage {
+  t: "setAccessPathSuggestions";
+  accessPathSuggestions: AccessPathSuggestionOptions;
+}
+
 export type ToModelEditorMessage =
   | SetExtensionPackStateMessage
   | SetMethodsMessage
   | SetModeledMethodsMessage
   | SetModifiedMethodsMessage
   | SetInProgressMethodsMessage
-  | RevealMethodMessage;
+  | RevealMethodMessage
+  | SetAccessPathSuggestionsMessage;
 
 export type FromModelEditorMessage =
   | CommonFromViewMessages

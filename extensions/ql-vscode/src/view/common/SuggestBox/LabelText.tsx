@@ -1,12 +1,12 @@
 import * as React from "react";
-import { Option } from "./suggestions";
+import { AccessPathOption } from "../../../model-editor/suggestions";
 import { HighlightedText } from "./HighlightedText";
 import { createHighlights } from "./highlight";
 import { useMemo } from "react";
 import { parseAccessPathTokens } from "./access-path";
 
 type Props = {
-  item: Option;
+  item: AccessPathOption;
   inputValue: string;
 };
 

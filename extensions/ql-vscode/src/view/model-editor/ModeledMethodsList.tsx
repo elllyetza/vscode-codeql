@@ -9,6 +9,7 @@ import {
   sortGroupNames,
 } from "../../model-editor/shared/sorting";
 import { ModelEditorViewState } from "../../model-editor/shared/view-state";
+import { AccessPathSuggestionOptions } from "../../model-editor/suggestions";
 
 export type ModeledMethodsListProps = {
   methods: Method[];
@@ -16,6 +17,7 @@ export type ModeledMethodsListProps = {
   modifiedSignatures: Set<string>;
   inProgressMethods: Set<string>;
   revealedMethodSignature: string | null;
+  accessPathSuggestions?: AccessPathSuggestionOptions;
   viewState: ModelEditorViewState;
   hideModeledMethods: boolean;
   onChange: (methodSignature: string, modeledMethods: ModeledMethod[]) => void;
@@ -41,6 +43,7 @@ export const ModeledMethodsList = ({
   viewState,
   hideModeledMethods,
   revealedMethodSignature,
+  accessPathSuggestions,
   onChange,
   onSaveModelClick,
   onGenerateFromLlmClick,
@@ -87,6 +90,7 @@ export const ModeledMethodsList = ({
           viewState={viewState}
           hideModeledMethods={hideModeledMethods}
           revealedMethodSignature={revealedMethodSignature}
+          accessPathSuggestions={accessPathSuggestions}
           onChange={onChange}
           onSaveModelClick={onSaveModelClick}
           onGenerateFromLlmClick={onGenerateFromLlmClick}

@@ -10,8 +10,9 @@ import {
 import { DataTuple } from "../model-extension-file";
 import { Mode } from "../shared/mode";
 import type { QueryConstraints } from "../../local-queries/query-constraints";
-import { DecodedBqrs } from "../../common/bqrs-cli-types";
+import { DecodedBqrs, DecodedBqrsChunk } from "../../common/bqrs-cli-types";
 import { BaseLogger } from "../../common/logging";
+import { AccessPathSuggestionRow } from "../suggestions";
 
 type GenerateMethodDefinition<T> = (method: T) => DataTuple[];
 type ReadModeledMethod = (row: DataTuple[]) => ModeledMethod;
@@ -39,6 +40,18 @@ type ModelsAsDataLanguageModelGeneration = {
   ) => ModeledMethod[];
 };
 
+type ModelsAsDataLanguageAccessPathSuggestions = {
+  parseResults: (
+    // The results of a single predicate of the query.
+    bqrs: DecodedBqrsChunk,
+    // The language-specific predicate that was used to generate the results. This is passed to allow
+    // sharing of code between different languages.
+    modelsAsDataLanguage: ModelsAsDataLanguage,
+    // The logger to use for logging.
+    logger: BaseLogger,
+  ) => AccessPathSuggestionRow[];
+};
+
 export type ModelsAsDataLanguagePredicates = {
   source?: ModelsAsDataLanguagePredicate<SourceModeledMethod>;
   sink?: ModelsAsDataLanguagePredicate<SinkModeledMethod>;
@@ -61,6 +74,7 @@ export type ModelsAsDataLanguage = {
   createMethodSignature: (method: MethodDefinition) => string;
   predicates: ModelsAsDataLanguagePredicates;
   modelGeneration?: ModelsAsDataLanguageModelGeneration;
+  accessPathSuggestions?: ModelsAsDataLanguageAccessPathSuggestions;
   /**
    * Returns the list of valid arguments that can be selected for the given method.
    * @param method The method to get the valid arguments for.
