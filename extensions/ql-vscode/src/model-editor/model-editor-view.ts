@@ -493,10 +493,6 @@ export class ModelEditorView extends AbstractWebview<
     const modelsAsDataLanguage = getModelsAsDataLanguage(this.language);
     const accessPathSuggestions = modelsAsDataLanguage.accessPathSuggestions;
     if (!accessPathSuggestions) {
-      void showAndLogErrorMessage(
-        this.app.logger,
-        `Access path suggestions are not supported for ${this.language}.`,
-      );
       return;
     }
 
