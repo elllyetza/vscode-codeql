@@ -3,6 +3,7 @@ import { Provenance } from "../../modeled-method";
 import { DataTuple } from "../../model-extension-file";
 import { sharedExtensiblePredicates, sharedKinds } from "../shared";
 import { filterFlowModelQueries, parseFlowModelResults } from "./generate";
+import { parseAccessPathSuggestionsResults } from "./suggestions";
 import { getArgumentsList, MethodArgument } from "../../method";
 
 function readRowToMethod(row: DataTuple[]): string {
@@ -145,6 +146,9 @@ export const staticLanguage: ModelsAsDataLanguage = {
     },
     filterQueries: filterFlowModelQueries,
     parseResults: parseFlowModelResults,
+  },
+  accessPathSuggestions: {
+    parseResults: parseAccessPathSuggestionsResults,
   },
   getArgumentOptions: (method) => {
     const argumentsList = getArgumentsList(method.methodParameters).map(

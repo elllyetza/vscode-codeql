@@ -2,7 +2,6 @@ import { BaseLogger } from "../../../common/logging";
 import { DecodedBqrsChunk } from "../../../common/bqrs-cli-types";
 import { ModelsAsDataLanguage } from "../models-as-data";
 import { AccessPathSuggestionRow, isDefinitionType } from "../../suggestions";
-import { parseRubyMethodFromPath, rubyMethodSignature } from "./access-paths";
 
 export function parseAccessPathSuggestionsResults(
   bqrs: DecodedBqrsChunk,
@@ -15,18 +14,20 @@ export function parseAccessPathSuggestionsResults(
         (value): value is string => typeof value === "string",
       );
 
-      if (row.length !== 5) {
+      if (row.length !== 7) {
         void logger.log(
           `Skipping result ${index} because it has the wrong length`,
         );
         return null;
       }
 
-      const type = row[0];
-      const methodName = parseRubyMethodFromPath(row[1]);
-      const value = row[2];
-      const details = row[3];
-      const definitionType = row[4];
+      const packageName = row[0];
+      const typeName = row[1];
+      const methodName = row[2];
+      const methodParameters = row[3];
+      const value = row[4];
+      const details = row[5];
+      const definitionType = row[6];
 
       if (!isDefinitionType(definitionType)) {
         void logger.log(
@@ -37,11 +38,11 @@ export function parseAccessPathSuggestionsResults(
 
       return {
         method: {
-          packageName: "",
-          typeName: type,
+          packageName,
+          typeName,
           methodName,
-          methodParameters: "",
-          signature: rubyMethodSignature(type, methodName),
+          methodParameters,
+          signature: `${packageName}.${typeName}#${methodName}${methodParameters}`,
         },
         value,
         details,
