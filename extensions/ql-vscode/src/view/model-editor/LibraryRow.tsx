@@ -244,7 +244,7 @@ export const LibraryRow = ({
           <SectionDivider />
           <ButtonsContainer>
             <VSCodeButton onClick={handleSave} disabled={!hasUnsavedChanges}>
-              Save
+              {selectedSignatures.size === 0 ? "Save" : "Save selected"}
             </VSCodeButton>
           </ButtonsContainer>
         </>
