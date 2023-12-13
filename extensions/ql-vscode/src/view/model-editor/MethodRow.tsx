@@ -71,10 +71,12 @@ export type MethodRowProps = {
   methodCanBeModeled: boolean;
   modeledMethods: ModeledMethod[];
   methodIsUnsaved: boolean;
+  methodIsSelected: boolean;
   modelingInProgress: boolean;
   viewState: ModelEditorViewState;
   revealedMethodSignature: string | null;
   onChange: (methodSignature: string, modeledMethods: ModeledMethod[]) => void;
+  onMethodClick: (methodSignature: string) => void;
 };
 
 export const MethodRow = (props: MethodRowProps) => {
@@ -104,9 +106,11 @@ const ModelableMethodRow = forwardRef<HTMLElement | undefined, MethodRowProps>(
       method,
       modeledMethods: modeledMethodsProp,
       methodIsUnsaved,
+      methodIsSelected,
       viewState,
       revealedMethodSignature,
       onChange,
+      onMethodClick,
     } = props;
 
     const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
@@ -187,6 +191,10 @@ const ModelableMethodRow = forwardRef<HTMLElement | undefined, MethodRowProps>(
       <DataGridRow
         data-testid="modelable-method-row"
         focused={revealedMethodSignature === method.signature}
+        selected={methodIsSelected}
+        onClick={() => {
+          onMethodClick(method.signature);
+        }}
       >
         <DataGridCell
           gridRow={`span ${modeledMethods.length + validationErrors.length}`}
