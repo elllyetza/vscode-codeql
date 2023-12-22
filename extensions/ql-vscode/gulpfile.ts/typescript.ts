@@ -4,7 +4,7 @@ import esbuild from "gulp-esbuild";
 import ts from "gulp-typescript";
 import del from "del";
 
-function goodReporter(): ts.reporter.Reporter {
+export function goodReporter(): ts.reporter.Reporter {
   return {
     error: (error, typescript) => {
       if (error.tsFile) {
